@@ -1,0 +1,30 @@
+[
+  {
+    "name": "asd",
+    "manufacturer": "asd",
+    "price": "123",
+    "quantity": "123",
+    "_id": "1746598483957"
+  },
+  {
+    "name": "dd",
+    "manufacturer": "dd",
+    "price": "123",
+    "quantity": "123",
+    "_id": "1746598495346"
+  },
+  {
+    "name": "Muhammad Aarish Mughal",
+    "manufacturer": "asd",
+    "price": "123",
+    "quantity": "13",
+    "_id": "1747088028810"
+  },
+  {
+    "name": "Muhammad Aarish Mughal",
+    "manufacturer": "123",
+    "price": "123",
+    "quantity": "123",
+    "_id": "1747088051222"
+  }
+]
