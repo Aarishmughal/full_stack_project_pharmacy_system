@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import axios from "axios";
 
-const MedicineList = () => {
+const SalesList = () => {
     const [medicines, setMedicines] = useState([]);
 
     useEffect(() => {
@@ -22,11 +22,11 @@ const MedicineList = () => {
         <Table striped bordered hover className="mt-4">
             <thead>
                 <tr>
-                    <th>Sr.</th>
-                    <th>Name</th>
-                    <th>Manufacturer</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
+                    <th>Sr. </th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email Address</th>
+                    <th>Contact Phone</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -63,4 +63,4 @@ const MedicineList = () => {
     );
 };
 
-export default MedicineList;
+export default SalesList;
