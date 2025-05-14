@@ -10,8 +10,13 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const medicinesRouter = require("./routes/medicines");
+const manufacturersRouter = require("./routes/manufacturers");
+const vendorsRouter = require("./routes/vendors");
+
 app.use("/api/medicines", medicinesRouter);
+app.use("/api/manufacturers", manufacturersRouter);
+app.use("/api/vendors", vendorsRouter);
 
 app.listen(PORT, () => {
-	console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });

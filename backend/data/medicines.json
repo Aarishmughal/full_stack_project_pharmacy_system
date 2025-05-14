@@ -26,5 +26,12 @@
     "price": "123",
     "quantity": "123",
     "_id": "1747160763414"
+  },
+  {
+    "name": "asd",
+    "manufacturer": "asd",
+    "price": "123",
+    "quantity": "123",
+    "_id": "1747206663929"
   }
 ]

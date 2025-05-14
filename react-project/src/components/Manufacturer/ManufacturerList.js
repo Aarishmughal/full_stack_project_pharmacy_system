@@ -2,20 +2,22 @@ import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import axios from "axios";
 
-const MedicineList = () => {
-    const [medicines, setMedicines] = useState([]);
+const ManufacturerList = () => {
+    const [manufacturers, setManufacturers] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await axios.get("http://localhost:5000/api/medicines");
-            setMedicines(res.data);
+            const res = await axios.get(
+                "http://localhost:5000/api/manufacturers"
+            );
+            setManufacturers(res.data);
         };
         fetchData();
     }, []);
 
-    const deleteMedicine = async (id) => {
-        await axios.delete(`http://localhost:5000/api/medicines/${id}`);
-        setMedicines(medicines.filter((med) => med._id !== id));
+    const deleteManufacturer = async (id) => {
+        await axios.delete(`http://localhost:5000/api/manufacturers/${id}`);
+        setManufacturers(manufacturers.filter((man) => man._id !== id));
     };
 
     return (
@@ -24,20 +26,16 @@ const MedicineList = () => {
                 <tr>
                     <th>Sr.</th>
                     <th>Name</th>
-                    <th>Manufacturer</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
+                    <th>Address</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {medicines.map((med, index) => (
-                    <tr key={med._id}>
+                {manufacturers.map((man, index) => (
+                    <tr key={man._id}>
                         <td>{index + 1}</td>
-                        <td>{med.name}</td>
-                        <td>{med.manufacturer}</td>
-                        <td>{med.price}</td>
-                        <td>{med.quantity}</td>
+                        <td>{man.name}</td>
+                        <td>{man.address}</td>
                         <td className="gap-2 d-flex justify-content-center">
                             <Button
                                 variant="warning"
@@ -51,7 +49,7 @@ const MedicineList = () => {
                             </Button>
                             <Button
                                 variant="danger"
-                                onClick={() => deleteMedicine(med._id)}
+                                onClick={() => deleteManufacturer(man._id)}
                             >
                                 <i class="bi bi-trash3-fill"></i>
                             </Button>
@@ -63,4 +61,4 @@ const MedicineList = () => {
     );
 };
 
-export default MedicineList;
+export default ManufacturerList;
