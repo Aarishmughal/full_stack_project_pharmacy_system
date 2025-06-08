@@ -1,0 +1,49 @@
+[
+  {
+    "customer": {
+      "name": "Muhammad Aarish Mughal",
+      "phone": "03315003366",
+      "address": "Mughal Home, Doctor's Street, Mehmood Kot, Near Northern Bypass, Bosan Road."
+    },
+    "medicines": [
+      {
+        "medicineId": "1747088028810",
+        "name": "Muhammad Aarish Mughal",
+        "manufacturer": "asd",
+        "price": 123,
+        "quantity": 21,
+        "total": 2583
+      },
+      {
+        "medicineId": "1746598483957",
+        "name": "asd",
+        "manufacturer": "asd",
+        "price": 123,
+        "quantity": 32,
+        "total": 3936
+      }
+    ],
+    "grandTotal": 6519,
+    "_id": "1749415914723"
+  },
+  {
+    "customer": {
+      "name": "Muhammad Aarish Mughal",
+      "phone": "03315003366",
+      "address": "Mughal Home, Doctor's Street, Mehmood Kot, Near Northern Bypass, Bosan Road."
+    },
+    "medicines": [
+      {
+        "medicineId": "1747088028810",
+        "name": "Muhammad Aarish Mughal",
+        "manufacturer": "asd",
+        "price": 123,
+        "quantity": 11,
+        "total": 1353
+      }
+    ],
+    "grandTotal": 1353,
+    "date": "2025-06-08T21:13:37.093Z",
+    "_id": "1749417217148"
+  }
+]
