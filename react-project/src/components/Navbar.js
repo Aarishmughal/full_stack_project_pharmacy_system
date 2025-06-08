@@ -18,6 +18,7 @@ const Navbar = () => (
                     src="logo.png"
                     height="100px"
                     alt="Pharmacy Management System"
+                    className="rounded-5"
                 />
             </RBNavbar.Brand>
             <RBNavbar.Toggle aria-controls="basic-navbar-nav" />
