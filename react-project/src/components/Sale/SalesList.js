@@ -37,48 +37,169 @@ const SalesList = () => {
     };
 
     const handlePrint = (receipt) => {
-        setSelectedReceipt(receipt);
-        setShowModal(true);
-        setTimeout(() => {
-            const printContents = document.getElementById("printable-receipt");
-            if (!printContents) return;
-            const html = `
+        // Generate the HTML content directly without relying on DOM elements
+        const printHTML = `
             <html>
             <head>
                 <title>Receipt PDF</title>
                 <style>
-                    body { font-family: Arial, sans-serif; margin: 40px; }
-                    table { width: 100%; border-collapse: collapse; }
-                    th, td { border: 1px solid #333; padding: 8px; text-align: left; }
-                    th { background: #eee; }
-                    h5 { margin-top: 24px; }
+                    body { 
+                        font-family: Arial, sans-serif; 
+                        margin: 40px; 
+                        line-height: 1.6;
+                    }
+                    .header {
+                        text-align: center;
+                        margin-bottom: 30px;
+                        border-bottom: 2px solid #333;
+                        padding-bottom: 20px;
+                    }
+                    .customer-info {
+                        margin-bottom: 30px;
+                        padding: 15px;
+                        background: #f8f9fa;
+                        border-radius: 5px;
+                    }
+                    .customer-info h3 {
+                        margin-top: 0;
+                        color: #333;
+                    }
+                    .customer-info p {
+                        margin: 5px 0;
+                    }
+                    table { 
+                        width: 100%; 
+                        border-collapse: collapse; 
+                        margin: 20px 0;
+                    }
+                    th, td { 
+                        border: 1px solid #333; 
+                        padding: 12px 8px; 
+                        text-align: left; 
+                    }
+                    th { 
+                        background: #eee; 
+                        font-weight: bold;
+                    }
+                    .medicines-section {
+                        margin: 30px 0;
+                    }
+                    .medicines-section h3 {
+                        color: #333;
+                        border-bottom: 1px solid #ccc;
+                        padding-bottom: 10px;
+                    }
+                    .total-section {
+                        margin-top: 30px;
+                        text-align: right;
+                        font-size: 18px;
+                        font-weight: bold;
+                        background: #f8f9fa;
+                        padding: 15px;
+                        border-radius: 5px;
+                    }
+                    .footer {
+                        margin-top: 50px;
+                        text-align: center;
+                        font-size: 12px;
+                        color: #666;
+                        border-top: 1px solid #ccc;
+                        padding-top: 20px;
+                    }
                 </style>
             </head>
-            <body>${printContents.outerHTML}</body>
+            <body>
+                <div class="header">
+                    <h1>Sales Receipt</h1>
+                    <p>Date: ${
+                        receipt.date || new Date().toLocaleDateString()
+                    }</p>
+                </div>
+                
+                <div class="customer-info">
+                    <h3>Customer Information</h3>
+                    <p><strong>Name:</strong> ${
+                        receipt.customer?.name || "N/A"
+                    }</p>
+                    <p><strong>Phone:</strong> ${
+                        receipt.customer?.phone || "N/A"
+                    }</p>
+                    <p><strong>Address:</strong> ${
+                        receipt.customer?.address || "N/A"
+                    }</p>
+                </div>
+                
+                <div class="medicines-section">
+                    <h3>Medicines</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Manufacturer</th>
+                                <th>Price (PKR)</th>
+                                <th>Quantity</th>
+                                <th>Total (PKR)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${
+                                receipt.medicines
+                                    ?.map(
+                                        (med, idx) => `
+                                <tr>
+                                    <td>${idx + 1}</td>
+                                    <td>${med.name || "N/A"}</td>
+                                    <td>${med.manufacturer || "N/A"}</td>
+                                    <td>${med.price || 0}</td>
+                                    <td>${med.quantity || 0}</td>
+                                    <td>${med.total || 0}</td>
+                                </tr>
+                            `
+                                    )
+                                    .join("") ||
+                                '<tr><td colspan="6">No medicines found</td></tr>'
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="total-section">
+                    Grand Total: ${receipt.grandTotal || 0} PKR
+                </div>
+                
+                <div class="footer">
+                    <p>Thank you for your business!</p>
+                    <p>Receipt generated on ${new Date().toLocaleString()}</p>
+                </div>
+            </body>
             </html>
         `;
-            const printWindow = window.open(
-                "",
-                "_blank",
-                "width=800,height=600"
-            );
-            if (!printWindow) return;
-            printWindow.document.open();
-            printWindow.document.write(html);
-            printWindow.document.close();
+
+        // Open new window and print
+        const printWindow = window.open("", "_blank", "width=800,height=600");
+        if (!printWindow) {
+            alert("Please allow popups for this website to enable printing.");
+            return;
+        }
+
+        printWindow.document.open();
+        printWindow.document.write(printHTML);
+        printWindow.document.close();
+
+        // Wait for content to load, then print
+        printWindow.onload = () => {
             printWindow.focus();
-            printWindow.onload = () => {
+            setTimeout(() => {
                 printWindow.print();
                 printWindow.close();
-            };
-        }, 300);
+            }, 500);
+        };
     };
 
     return (
         <>
-            <h1 className="text-center my-4 display-1">
-                Old Sale Receipts
-            </h1>
+            <h1 className="text-center my-4 display-1">Old Sale Receipts</h1>
             <Table striped bordered hover className="mt-4">
                 <thead>
                     <tr>
@@ -135,7 +256,7 @@ const SalesList = () => {
                 </Modal.Header>
                 <Modal.Body>
                     {selectedReceipt && (
-                        <>
+                        <div id="printable-receipt">
                             <h5>Customer Information</h5>
                             <p>
                                 <b>Name:</b> {selectedReceipt.customer?.name}
@@ -183,7 +304,7 @@ const SalesList = () => {
                             <h5 className="mt-3">
                                 Grand Total (PKR): {selectedReceipt.grandTotal}
                             </h5>
-                        </>
+                        </div>
                     )}
                 </Modal.Body>
                 <Modal.Footer>
